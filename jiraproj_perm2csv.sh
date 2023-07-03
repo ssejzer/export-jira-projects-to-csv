@@ -10,18 +10,17 @@ if [ -z "$project" ] ; then
                 --header 'Accept: application/json' \
                 "$URL/rest/api/2/project")
 
-	echo "project,role,users,groups"
+	echo "project,permission,type,group,user"
         echo $keys | jq -r '.[].key|@uri' | while read key ; do
                 $0 "$key"
         done
 
 else
-	echo $project
         p=$(curl -s -k --request GET \
                 -H "Authorization: Bearer $TOKEN" \
                 --header 'Accept: application/json' \
-		"$URL/rest/projectconfig/latest/roles/$project?pageNumber=1&pageSize=500&query=")
-	echo "$p" | jq -r '.roles[] | [ "'$project'", .name, ( .users | map(.name) | join(";") ), ( .groups | map(.name) | join(";") ) ] | @csv '
+		"$URL/rest/api/2/project/$project/permissionscheme/?expand=permissions,user,group")
+	echo "$p" | jq -r '.permissions[] | [ "'$project'", .permission, .holder.type, .holder.group.name, .holder.user.name ] | @csv '
 
 fi
 

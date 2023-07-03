@@ -1,6 +1,5 @@
 # export-jira-projects-to-csv
 Bash script to export JIRA projects, roles and permissions to CSV format
-
 # Usage
 
 
@@ -16,14 +15,20 @@ URL='https://jira.mycompany.com:8400'
 
 ## Run it!
 
-### To get all the projects
+### To get all the projects, roles, groups and users
 ```bash
 jiraproj2csv.sh
 ```
 
-### To get one project
+### To get all the projects permission schema
+```bash
+jiraproj_perm2csv.sh
+```
+
+### To get one project roles or permissions
 ```bash
 jiraproj2csv.sh "project ID"
+jiraproj_perm2csv.sh "project ID"
 ```
 
 
